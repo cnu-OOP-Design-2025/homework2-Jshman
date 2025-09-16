@@ -84,9 +84,7 @@ int findBestStudent(StudentStruct* students, int numOfStudent) {
 
 /* Return Index */
 int findStudentByStudentID(StudentStruct* students, int numOfStudent, int id) {
-    int length = 100;
-
-    for (int i=0; i<length; i++) {
+    for (int i=0; i<numOfStudent; i++) {
         if (students[i].id == id) {
             return i;
         }
@@ -105,7 +103,7 @@ void addStudent(StudentStruct *students, int *numOfStudent, const char* name, in
     int idx = findStudentByStudentID(students, *numOfStudent, id);
     if (idx < 0) {
         ++(*numOfStudent);
-        students[id-1001] = {name, id, midterm, final};
+        students[(*numOfStudent)-1] = {name, id, midterm, final};
     }
 }
 
@@ -114,6 +112,8 @@ void deleteStudent(StudentStruct* students, int *numOfStudent, int id) {
     if (idx >= 0) {
         --(*numOfStudent);
         students[idx] = {};
+        for (int i=idx; i < *numOfStudent; i++)
+            students[i] = students[i+1];
     }
 }
 
@@ -142,5 +142,3 @@ void printStudentInfo(StudentStruct* students, int numOfStudent, int id) {
                   << ", ID: " << students[idx].id << std::endl;
     }
 }
-
-
